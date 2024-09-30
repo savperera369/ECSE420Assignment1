@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class MatrixMultiplication {
 	
-	private static final int NUMBER_THREADS = 2;
+	private static final int NUMBER_THREADS = 8;
 	private static final int MATRIX_SIZE = 4000;
 
 	public static void main(String[] args) {
@@ -17,24 +17,23 @@ public class MatrixMultiplication {
 		long startTime;
 		long endTime;
 
-		// startTime = System.currentTimeMillis();
-		// double[][] sequentialResult = sequentialMultiplyMatrix(a, b);
-		// endTime = System.currentTimeMillis();
-		// long sequentialTime = endTime - startTime;
+		startTime = System.currentTimeMillis();
+		double[][] sequentialResult = sequentialMultiplyMatrix(a, b);
+		endTime = System.currentTimeMillis();
+		long sequentialTime = endTime - startTime;
 
 		startTime = System.currentTimeMillis();
 		double[][] parallelResult = parallelMultiplyMatrix(a, b);	
 		endTime = System.currentTimeMillis();
 		long parallelTime = endTime - startTime;
 
-		System.out.println("Parallel Time: " + parallelTime);
-		// if (Arrays.deepEquals(sequentialResult, parallelResult)) {
-		// 	System.out.println("Both the sequential and parallel multiplications return the same reponse.\n");
-		// 	System.out.println("Sequential Time: " + sequentialTime + "\n");
-		// 	System.out.println("Parallel Time: " + parallelTime);
-		// } else {
-		// 	System.out.println("The sequential and parallel executions return different results");
-		// }
+		if (Arrays.deepEquals(sequentialResult, parallelResult)) {
+			System.out.println("Both the sequential and parallel multiplications return the same reponse.\n");
+			System.out.println("Sequential Time: " + sequentialTime + "\n");
+			System.out.println("Parallel Time: " + parallelTime);
+		} else {
+			System.out.println("The sequential and parallel executions return different results");
+		}
 	}
 	
 	/**
