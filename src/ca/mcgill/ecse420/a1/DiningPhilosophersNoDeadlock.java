@@ -53,6 +53,15 @@ public class DiningPhilosophersNoDeadlock {
             this.eatingCount = eatingCount;
 			this.numTimesEaten = 0;
 		}
+		
+		public void think() {
+			try {
+				//System.out.println("Philosopher " + this.philosopherNumber + " is thinking");
+				Thread.sleep((int) Math.random() * 100);
+			} catch (Exception e) {
+				System.out.println("exception");
+			}
+		}
 
 		public void eat() {
 			try {
@@ -71,6 +80,7 @@ public class DiningPhilosophersNoDeadlock {
 		@Override
 		public void run() {
 			while (true) {
+				think();
                 globalLock.lock();
                 try {
                     if (eatingCount[0] < maxEaters) {

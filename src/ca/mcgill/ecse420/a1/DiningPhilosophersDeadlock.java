@@ -47,6 +47,15 @@ public class DiningPhilosophersDeadlock {
 			this.numTimesEaten = 0;
 		}
 
+		public void think() {
+			try {
+				//System.out.println("Philosopher " + this.philosopherNumber + " is thinking");
+				Thread.sleep((int) Math.random() * 100);
+			} catch (Exception e) {
+				System.out.println("exception");
+			}
+		}
+
 		public void eat() {
 			try {
 				this.numTimesEaten += 1;
@@ -64,9 +73,10 @@ public class DiningPhilosophersDeadlock {
 		@Override
 		public void run() {
 			while (true) {
+				think();
 				try {
 					this.leftChopstick.lock();
-					Thread.sleep(100);
+					// Thread.sleep(100);
 					this.rightChopstick.lock();
 					eat();
 				} catch (Exception e) {

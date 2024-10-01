@@ -52,6 +52,15 @@ public class DiningPhilosophersNoStarvation {
 			this.numTimesEaten = 0;
 		}
 
+        public void think() {
+			try {
+				//System.out.println("Philosopher " + this.philosopherNumber + " is thinking");
+				Thread.sleep((int) Math.random() * 100);
+			} catch (Exception e) {
+				System.out.println("exception");
+			}
+		}
+
 		public void eat() {
 			try {
 				this.numTimesEaten += 1;
@@ -69,6 +78,7 @@ public class DiningPhilosophersNoStarvation {
 		@Override
 		public void run() {
 			while (true) {
+                think();
                 globalLock.lock();
                 try {
                     if (eatingCount[0] < maxEaters) {
@@ -85,12 +95,12 @@ public class DiningPhilosophersNoStarvation {
                 
                 try {
                     leftLocked = leftChopstick.tryLock();
-                    // if (this.philosopherNumber == 0) {
-                    //     Thread.sleep(1000);
-                    // } else {
-                    //     Thread.sleep(100);
-                    // }
-                    Thread.sleep(100);
+                    if (this.philosopherNumber == 0) {
+                        Thread.sleep(1000);
+                    } else {
+                        Thread.sleep(100);
+                    }
+                    // Thread.sleep(100);
                     rightLocked = rightChopstick.tryLock();
 
                     if (leftLocked && rightLocked) {
@@ -112,12 +122,6 @@ public class DiningPhilosophersNoStarvation {
                     } finally {
                         globalLock.unlock();
                     }
-                }
-
-                try {
-                    Thread.sleep(100); 
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
                 }
 			}
 		}
